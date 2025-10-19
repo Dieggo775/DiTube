@@ -54,7 +54,7 @@ public class Video {
     public void setThumbnailUrl(String thumbnailUrl) { this.thumbnailUrl = thumbnailUrl; }
 
     public boolean isShort() { return isShort; }
-    public void setShort(boolean aShort) { isShort = aShort; }
+    public void setShort(boolean isShort) { this.isShort = isShort; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }

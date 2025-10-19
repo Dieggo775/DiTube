@@ -26,6 +26,23 @@ public class VideoController {
         return videoRepository.findAll();
     }
 
+    @GetMapping("/feed")
+    public List<Video> getFeed(
+            @RequestParam(required = false) Long channelId,
+            @RequestParam(required = false) Boolean isShort,
+            @RequestParam(required = false) String title
+    ) {
+        if (channelId != null) {
+            return videoRepository.findByChannelId(channelId);
+        } else if (isShort != null && isShort) {
+            return videoRepository.findByIsShortTrue();
+        } else if (title != null && !title.isEmpty()) {
+            return videoRepository.findByTitleContainingIgnoreCase(title);
+        } else {
+            return videoRepository.findAllOrderByCreatedAtDesc();
+        }
+    }
+
     @PostMapping
     public Video createVideo(@RequestBody VideoRequestDTO dto) {
         Channel channel = channelRepository.findById(dto.getChannelId())
