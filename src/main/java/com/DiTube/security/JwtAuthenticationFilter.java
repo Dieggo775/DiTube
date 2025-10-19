@@ -1,5 +1,6 @@
 package com.DiTube.security;
 
+import com.DiTube.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,11 +11,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.List;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -25,38 +24,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
-    private static final List<String> PUBLIC_PATHS = List.of(
-            "/api/auth/**",
-            "/api/upload/**",
-            "/api/videos",
-            "/api/videos/**",
-            "/api/comments/**",
-            "/api/comments",
-            "/api/channels/**",
-            "/api/users/register"
-    );
-
-    private final AntPathMatcher pathMatcher = new AntPathMatcher();
-
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
-
-
-        String path = request.getRequestURI();
-
-        if (path.endsWith("/")) {
-            path = path.substring(0, path.length() - 1);
-        }
-
-        for (String publicPath : PUBLIC_PATHS) {
-            if (pathMatcher.match(publicPath, path)) {
-                filterChain.doFilter(request, response);
-                return;
-            }
-        }
 
         final String authHeader = request.getHeader("Authorization");
         String username = null;
@@ -82,4 +54,3 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 }
-
