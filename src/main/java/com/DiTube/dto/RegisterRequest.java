@@ -1,37 +1,11 @@
-package com.DiTube.model;
+package com.DiTube.dto;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "users")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class RegisterRequest {
     private String username;
     private String email;
     private String password;
-    private String role;
 
     // Getters e setters
-    public Long getId() {
-        return id;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getUsername() {
         return username;
     }

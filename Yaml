@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: ditube_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 34181807
+      MYSQL_DATABASE: ditube_clone
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  app:
+    build: .
+    container_name: ditube_app
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/ditube_clone
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 34181807
+    command: ["java", "-jar", "app.jar"]
+
+volumes:
+  mysql_data:
