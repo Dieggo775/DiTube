@@ -47,4 +47,9 @@ public class CommentController {
     public List<Comment> getCommentsByVideo(@PathVariable Long videoId) {
         return commentRepository.findByVideoIdOrderByCreatedAtDesc(videoId);
     }
+
+    @GetMapping
+    public List<Comment> getAllComment() {
+        return commentRepository.findAll();
+    }
 }

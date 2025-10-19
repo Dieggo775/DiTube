@@ -40,8 +40,11 @@ public class SecurityConfig {
                                 "/api/auth/**",
                                 "/api/upload/**",
                                 "/api/videos/**",
+                                "/api/comments/",
                                 "/api/comments/**",
-                                "/api/channels/**"
+                                "/api/channels/**",
+                                "/api/users/**", //Lembrar de proteger essas rotas novamente
+                                "/api/auth/login" //Lembrar de proteger essas rotas novamente
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

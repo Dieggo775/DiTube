@@ -2,6 +2,8 @@ package com.DiTube.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -15,9 +17,19 @@ public class User {
     private String password;
     private String role;
 
+    private LocalDateTime createdAt;
+
     // Getters e setters
     public Long getId() {
         return id;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getRole() {

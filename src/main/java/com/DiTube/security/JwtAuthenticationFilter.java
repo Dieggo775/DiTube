@@ -31,7 +31,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/api/videos",
             "/api/videos/**",
             "/api/comments/**",
-            "/api/channels/**"
+            "/api/comments",
+            "/api/channels/**",
+            "/api/users/register"
     );
 
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
@@ -42,7 +44,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
+
         String path = request.getRequestURI();
+
+        if (path.endsWith("/")) {
+            path = path.substring(0, path.length() - 1);
+        }
 
         for (String publicPath : PUBLIC_PATHS) {
             if (pathMatcher.match(publicPath, path)) {
@@ -75,3 +82,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 }
+
